@@ -1,0 +1,10 @@
+#library {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.book {
+    border: 1px solid black;
+    height: 100px;
+}
