@@ -2,9 +2,12 @@
     border: 1px solid black;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    padding: 10px;
+    grid-gap: 10px;
 }
 
 .book {
     border: 1px solid black;
     height: 100px;
+    text-align: center;
 }
