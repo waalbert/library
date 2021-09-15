@@ -1,21 +1,37 @@
+body {
+    margin: 0;
+    background-image: url("wood-background.jpg");
+}
+
+#title {
+    text-align: center;
+    background-color: antiquewhite;
+    margin: 0;
+}
+
 #library {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     padding: 10px;
     grid-gap: 10px;
 }
 
-.book {
-    border: 1px solid black;
-    height: 100px;
-    text-align: center;
-}
-
 #add-book {
     text-align: center;
 }
 
-#title {
+.book {
+    border: 1px solid black;
+    /* height: 100px; */
     text-align: center;
+    font-size: 20px;
+}
+
+.book:nth-child(odd) {
+    background-color: purple;
+}
+
+.book:nth-child(even) {
+    background-color: yellow;
 }

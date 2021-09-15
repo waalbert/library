@@ -37,7 +37,7 @@ class Library {
         this.myLibrary.splice(bookIndex, 1);
         libraryDiv.removeChild(bookDiv);
         this.displayBooks();
-        updateLocalStorage();
+        
     }
     displayBooks() {
         this.resetBooks();
@@ -45,11 +45,11 @@ class Library {
             const bookContainer = document.createElement("div");
             bookContainer.classList.add("book");
             const titleDiv = document.createElement("div");
-            titleDiv.textContent = this.myLibrary[i].title;
+            titleDiv.textContent = `"${this.myLibrary[i].title}"`;
             const authorDiv = document.createElement("div");
             authorDiv.textContent = this.myLibrary[i].author;
             const pagesDiv = document.createElement("div");
-            pagesDiv.textContent = this.myLibrary[i].numPages;
+            pagesDiv.textContent = `${this.myLibrary[i].numPages} pages`;
             const isReadDiv = document.createElement("div");
             if (this.myLibrary[i].isRead === true) {
                 isReadDiv.textContent = "Read";
@@ -126,16 +126,19 @@ const bookUI = (() => {
         const deleteBookBtn = document.createElement("button");
         deleteBookBtn.textContent = "DELETE";
         deleteBookBtn.addEventListener("click", () => {
-            console.log(library.myLibrary[i]);
+            // console.log(library.myLibrary[i]);
             library.removeBook(library.myLibrary[i]);
-
+            updateLocalStorage();
         });
         return deleteBookBtn;
     };
     const createIsReadBtn = (i) => {
         const isReadBtn = document.createElement("button");
         isReadBtn.textContent = "READ?";
-        isReadBtn.addEventListener("click", () => library.myLibrary[i].read());
+        isReadBtn.addEventListener("click", () => {
+            library.myLibrary[i].read();
+            updateLocalStorage();
+        });
         return isReadBtn;
     };
 
@@ -144,6 +147,10 @@ const bookUI = (() => {
 
 function updateLocalStorage() {
     localStorage.setItem("library", JSON.stringify(library.myLibrary));
+}
+
+function JSONToBook(book) {
+    return new Book(book.title, book.author, book.numPages, book.isRead);
 }
 
 const library = new Library();
@@ -158,12 +165,14 @@ newBookBtn.addEventListener("click", () => {
     } else {
         form.create();
     }
-    // library.displayBooks();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    const books = JSON.parse(localStorage.getItem("library"));
     if (localStorage.getItem("library")) {
-        library.myLibrary = JSON.parse(localStorage.getItem("library"));
+        library.myLibrary = books.map(book => JSONToBook(book));
         library.displayBooks();
+    } else {
+        library.myLibrary = [];
     }
 });
